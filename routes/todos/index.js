@@ -78,6 +78,24 @@ router.get("/my", async (req, res, next) => {
   });
 });
 
+router.get("/:id", async (req, res, next) => {
+  const { id } = req.params;
+
+  const todo = await Todo.findOne({
+    _id: id,
+  }).exec();
+
+  if (!todo) {
+    return res.status(404).json({
+      message: "Todo not found!",
+    });
+  }
+
+  return res.json({
+    data: todo,
+  });
+});
+
 router.post("/", async (req, res, next) => {
   const { title, description } = req.body;
 
