@@ -27,13 +27,13 @@ mongoose
   })
   .then(() => {
     console.log("connected to db in development environment");
-  });
 
-Promise.all(
-  statuses.map(async (p, index) => {
-    return p.save();
-  })
-).then(() => {
-  console.log("DONE!");
-  mongoose.disconnect();
-});
+    Promise.all(
+      statuses.map(async (p, index) => {
+        return p.save();
+      })
+    ).then(() => {
+      console.log("DONE!");
+      mongoose.disconnect();
+    });
+  });
