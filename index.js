@@ -10,9 +10,19 @@ const passport = require("./passport");
 
 const app = express();
 
+app.use(helmet());
+
 app.use(cors());
 
-app.use(helmet());
+mongoose
+  .connect(config.MONGODB_URL)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.log("DB connection error: ", err));
+
+require("./models/status");
+require("./models/todo");
+
+mongoose.set("debug", config.nodeEnv === "development");
 
 app.use(bodyParser.json());
 app.use(express.static("public"));
@@ -27,13 +37,6 @@ app.use(function (err, req, res, next) {
 });
 
 const port = +config.port || 3000;
-
-mongoose
-  .connect(config.MONGODB_URL)
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.log("DB connection error: ", err));
-
-mongoose.set("debug", config.nodeEnv === "development");
 
 app.listen(port, () => {
   console.log("Server started on", port);

@@ -12,6 +12,12 @@ const StatusSchema = new Schema(
       type: String,
       require: true,
     },
+    todos: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Todo",
+      },
+    ],
   },
   { timestamps: true }
 );
